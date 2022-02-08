@@ -17,162 +17,161 @@ char** split_string(char*);
 int parse_int(char*);
 
 /*
- *  * Complete the 'simpleArraySum' function below.
- *   *
- *    * The function is expected to return an INTEGER.
- *     * The function accepts INTEGER_ARRAY ar as parameter.
- *      */
+ * Complete the 'simpleArraySum' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts INTEGER_ARRAY ar as parameter.
+ */
 
 int simpleArraySum(int ar_count, int* ar) {
-	    int temp = 0;
-	        for (int i = 0; i < ar_count; i ++){
-			        temp += ar[i];
-				    }
-		    return temp;
+    int temp = 0;
+    for (int i = 0; i < ar_count; i ++){
+        temp += ar[i];
+    }
+    return temp;
 }
 
 int main()
 {
-	    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
+    FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-	        int ar_count = parse_int(ltrim(rtrim(readline())));
+    int ar_count = parse_int(ltrim(rtrim(readline())));
 
-		    char** ar_temp = split_string(rtrim(readline()));
+    char** ar_temp = split_string(rtrim(readline()));
 
-		        int* ar = malloc(ar_count * sizeof(int));
+    int* ar = malloc(ar_count * sizeof(int));
 
-			    for (int i = 0; i < ar_count; i++) {
-				            int ar_item = parse_int(*(ar_temp + i));
+    for (int i = 0; i < ar_count; i++) {
+        int ar_item = parse_int(*(ar_temp + i));
 
-					            *(ar + i) = ar_item;
-						        }
+        *(ar + i) = ar_item;
+    }
 
-			        int result = simpleArraySum(ar_count, ar);
+    int result = simpleArraySum(ar_count, ar);
 
-				    fprintf(fptr, "%d\n", result);
+    fprintf(fptr, "%d\n", result);
 
-				        fclose(fptr);
+    fclose(fptr);
 
-					    return 0;
+    return 0;
 }
 
 char* readline() {
-	    size_t alloc_length = 1024;
-	        size_t data_length = 0;
+    size_t alloc_length = 1024;
+    size_t data_length = 0;
 
-		    char* data = malloc(alloc_length);
+    char* data = malloc(alloc_length);
 
-		        while (true) {
-				        char* cursor = data + data_length;
-					        char* line = fgets(cursor, alloc_length - data_length, stdin);
+    while (true) {
+        char* cursor = data + data_length;
+        char* line = fgets(cursor, alloc_length - data_length, stdin);
 
-						        if (!line) {
-								            break;
-									            }
+        if (!line) {
+            break;
+        }
 
-							        data_length += strlen(cursor);
+        data_length += strlen(cursor);
 
-								        if (data_length < alloc_length - 1 || data[data_length - 1] == '\n') {
-										            break;
-											            }
+        if (data_length < alloc_length - 1 || data[data_length - 1] == '\n') {
+            break;
+        }
 
-									        alloc_length <<= 1;
+        alloc_length <<= 1;
 
-										        data = realloc(data, alloc_length);
+        data = realloc(data, alloc_length);
 
-											        if (!data) {
-													            data = '\0';
+        if (!data) {
+            data = '\0';
 
-														                break;
-																        }
-												    }
+            break;
+        }
+    }
 
-			    if (data[data_length - 1] == '\n') {
-				            data[data_length - 1] = '\0';
+    if (data[data_length - 1] == '\n') {
+        data[data_length - 1] = '\0';
 
-					            data = realloc(data, data_length);
+        data = realloc(data, data_length);
 
-						            if (!data) {
-								                data = '\0';
-										        }
-							        } else {
-									        data = realloc(data, data_length + 1);
+        if (!data) {
+            data = '\0';
+        }
+    } else {
+        data = realloc(data, data_length + 1);
 
-										        if (!data) {
-												            data = '\0';
-													            } else {
-															                data[data_length] = '\0';
-																	        }
-											    }
+        if (!data) {
+            data = '\0';
+        } else {
+            data[data_length] = '\0';
+        }
+    }
 
-			        return data;
+    return data;
 }
 
 char* ltrim(char* str) {
-	    if (!str) {
-		            return '\0';
-			        }
+    if (!str) {
+        return '\0';
+    }
 
-	        if (!*str) {
-			        return str;
-				    }
+    if (!*str) {
+        return str;
+    }
 
-		    while (*str != '\0' && isspace(*str)) {
-			            str++;
-				        }
+    while (*str != '\0' && isspace(*str)) {
+        str++;
+    }
 
-		        return str;
+    return str;
 }
 
 char* rtrim(char* str) {
-	    if (!str) {
-		            return '\0';
-			        }
+    if (!str) {
+        return '\0';
+    }
 
-	        if (!*str) {
-			        return str;
-				    }
+    if (!*str) {
+        return str;
+    }
 
-		    char* end = str + strlen(str) - 1;
+    char* end = str + strlen(str) - 1;
 
-		        while (end >= str && isspace(*end)) {
-				        end--;
-					    }
+    while (end >= str && isspace(*end)) {
+        end--;
+    }
 
-			    *(end + 1) = '\0';
+    *(end + 1) = '\0';
 
-			        return str;
+    return str;
 }
 
 char** split_string(char* str) {
-	    char** splits = NULL;
-	        char* token = strtok(str, " ");
+    char** splits = NULL;
+    char* token = strtok(str, " ");
 
-		    int spaces = 0;
+    int spaces = 0;
 
-		        while (token) {
-				        splits = realloc(splits, sizeof(char*) * ++spaces);
+    while (token) {
+        splits = realloc(splits, sizeof(char*) * ++spaces);
 
-					        if (!splits) {
-							            return splits;
-								            }
+        if (!splits) {
+            return splits;
+        }
 
-						        splits[spaces - 1] = token;
+        splits[spaces - 1] = token;
 
-							        token = strtok(NULL, " ");
-								    }
+        token = strtok(NULL, " ");
+    }
 
-			    return splits;
+    return splits;
 }
 
 int parse_int(char* str) {
-	    char* endptr;
-	        int value = strtol(str, &endptr, 10);
+    char* endptr;
+    int value = strtol(str, &endptr, 10);
 
-		    if (endptr == str || *endptr != '\0') {
-			            exit(EXIT_FAILURE);
-				        }
+    if (endptr == str || *endptr != '\0') {
+        exit(EXIT_FAILURE);
+    }
 
-		        return value;
+    return value;
 }
-
